@@ -18,7 +18,7 @@ app.get('/users', (req,res)=>{
     res.json(users);
 });
 
-app.post('/users',(req,res)=>{
+app.post('/users',(req, res) => {
 
     const user = req.body;
     user.id = 85689;
@@ -34,6 +34,8 @@ app.put('/users/:id',(req,res)=>{
 
     const {id} = req.params;
     const user = req.body;
+
+    user.id = id;
 
     const result = {
         message: 'User updated',
@@ -54,7 +56,9 @@ app.patch('/users',(req,res)=>{
 
 app.delete('/users/:id',(req,res)=>{
 
-
+    const {id} = req.params;
+    //const id = req.params.id;
+    
     const result = {
         message:`User with id: ${id} deleted`
     }
@@ -62,6 +66,6 @@ app.delete('/users/:id',(req,res)=>{
 });
 
 app.listen(port, () => {
-    console.log(`Server started - Port ${port}`);
+    console.log(`######## App started . Port: ${port} ########`);
 });
 
