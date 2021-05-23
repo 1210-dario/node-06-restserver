@@ -24,20 +24,21 @@ class ExpressServer {
 
 
     }
-
+    //Metodo Privado solo lo llamo desde el constructor
     _middlewares(){
         this.app.use(express.json());
         this.app.use(morgan('tiny'));        
     }
-
+    //Rutas 
     _routes () {
 
         this.app.head("/status", (req, res) =>{
             res.status(200).end();
         })
+        //En esta linea seteamos por donde van a entrar las rutas, en este caso/api/v1/users
         this.app.use(this.basePathUser,require('../../routes/users'))
     }
-
+    //Instanciamos el error como Middleware y con la función next() sigue el codigo, en este caso persistimos el err osea error
     _notFound(){
         this.app.use((req, res, next) => {
             const err = new Error("Not Found");            
@@ -46,7 +47,7 @@ class ExpressServer {
         });
 
     }
-
+    //Manejamos el error que obtenemos del middleware _notFound
     _errorHandler(){
         this.app.use((err, req, res , next) => {
             const code = err.code || 500;
@@ -62,7 +63,7 @@ class ExpressServer {
 
         });
     }
-
+    //Configuramos Swagger para la documentacion
     _swaggerConfig(){
         this.app.use(
             config.swagger.path,
@@ -71,7 +72,7 @@ class ExpressServer {
         );
 
     }
-
+    //Funcion Async donde se "inicia" el servidor ya que tengo el .listen aqui
     async start() {
         this.app.listen(this.port, (error) => {
             if(error){

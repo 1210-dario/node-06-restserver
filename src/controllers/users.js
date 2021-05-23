@@ -1,5 +1,7 @@
 const express = require('express');
 
+//La idea es que aca solo deberiamos manejar la logica del controller y no del service.
+//De esta manera hacemos que los parametros req y res sean los que utiliza express como request y response
 /**
  * 
  * @param {express.Request} req 
@@ -33,6 +35,7 @@ const createUser = (req, res) => {
         message: 'User created',
         user
     }
+    //con el .status() ingresamos dentro el código http que deberia devolver la petición
     res.status(201).json(result);        
 };
 
@@ -84,6 +87,7 @@ const deleteUser = (req, res)=>{
     }
     res.json(result);
 };
+
 
 module.exports = {
     getAllUsers,
